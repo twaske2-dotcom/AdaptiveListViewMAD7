@@ -1,524 +1,165 @@
-# Experiment 7: Adaptive Android Application with ListView and ImageView
+# Experiment 7 — Adaptive UI using ListView and ImageView
+
+An Android application built in **Kotlin** that demonstrates an **adaptive user interface** using `ListView` and `ImageView`. The app presents a **Fruit Catalog**: a scrollable list of fruits where each row shows an icon, name, short description, and price. Tapping any fruit opens a dialog with a larger image and its name.
+
+---
 
 ## Student Details
 
-**Name:** Tejas Sunil Waske  
-**USN:** 25MCAR0189  
-**Experiment No.:** 7
+| Field | Details |
+|-------|---------|
+| **Name** | Tejas Sunil Waske |
+| **USN** | 25MCAR0189 |
+| **Experiment** | 7 — Create an Adaptive UI using ListView and ImageView |
 
 ---
 
-## Aim
+## Concept / Technology Behind the Experiment
 
-To create an adaptive Android application using ListView and ImageView with a custom Adapter.
+An **adaptive UI** is one that arranges and displays content dynamically based on the data provided to it, instead of hard-coding each item on screen. This experiment uses the following Android components:
 
----
+- **ListView** — a view group that displays a vertically scrollable list of items. It recycles row views for smooth scrolling and can handle any number of items.
+- **ImageView** — displays an image (here, a vector drawable of each fruit) inside every row and inside the details dialog.
+- **ArrayAdapter (custom adapter)** — the bridge between the data and the `ListView`. A custom adapter, `MyAdapter`, extends `ArrayAdapter` and inflates a custom row layout (`list_item.xml`) for each fruit, binding the icon, name, description, and price.
+- **Data class (`Fruit`)** — a Kotlin model that holds each fruit's name, description, price, and image resource, keeping the data clean and structured.
+- **AlertDialog** — shows a pop-up with the selected fruit's large image and name when a row is clicked, demonstrating item-level interaction.
 
-## Objective
-
-The objective of this experiment is to understand how ListView can be customized using a custom Adapter to display multiple types of information in each list item.
-
-The application demonstrates displaying fruit names along with their corresponding icons and handling item click events.
-
----
-
-## Concept / Technology Used
-
-### ListView
-
-`ListView` is an Android UI component used to display a vertically scrollable list of items.
-
-In this experiment, ListView is used to display a list of fruits.
+Because the list is generated from a data list and rendered through an adapter, adding or removing a fruit only requires changing the data — the UI adapts automatically. This is the core idea of an adaptive UI.
 
 ---
 
-### Custom Adapter
+## Scenario Used to Demonstrate It
 
-A custom Adapter is used to control how each item in the ListView is displayed.
+The chosen scenario is a **Fruit Catalog** for a grocery/store app. Each list item represents a fruit with:
 
-The application uses a custom Adapter named:
+- A **colored icon** (custom vector drawable)
+- The **fruit name** (e.g., *Apple*)
+- A **short description** (e.g., *Crisp and sweet*)
+- The **price** (e.g., *₹120/kg*)
 
-```text
-MyAdapter
+When the user taps a fruit, an `AlertDialog` displays a **larger image** of that fruit along with its **name** and a **CLOSE** button. This clearly shows how a single row layout adapts to different data and how `ImageView` is used both in the list and in the dialog.
+
+---
+
+## Features
+
+- Clean **green Material-style theme** with a header bar and a footer showing student details.
+- **Card-style rows** with rounded corners, an icon, name, description, and price.
+- **Custom vector drawable icons** for each fruit (no external image files needed).
+- **Click interaction** — tapping a fruit opens a details dialog with a large image.
+- Fully **data-driven** list using a custom `ArrayAdapter`.
+
+---
+
+## Project Folder & File Structure
+
 ```
-
-The Adapter extends `ArrayAdapter` and overrides `getView()` to create a customized row layout.
-
----
-
-### ImageView
-
-`ImageView` is used to display an image or icon for each fruit in the ListView.
-
----
-
-### TextView
-
-`TextView` is used to display the name of each fruit.
-
----
-
-### Toast
-
-A Toast message is displayed when the user clicks on a fruit item.
-
-For example:
-
-```text
-You selected: Mango
-```
-
----
-
-## Scenario
-
-The application displays a list of fruits.
-
-Each fruit item contains:
-
-- Fruit icon
-- Fruit name
-
-The application uses a custom Adapter to combine the `ImageView` and `TextView` inside each list item.
-
-When the user clicks on a fruit, a Toast message displays the selected fruit name.
-
-The application also contains the student's name and USN as a list item for verification.
-
-### Application Flow
-
-```text
-                 Android Application
-                         |
-                         ↓
-                    MainActivity
-                         |
-                         ↓
-                      ListView
-                         |
-                         ↓
-                   Custom Adapter
-                    (MyAdapter)
-                         |
-             +-----------+-----------+
-             |                       |
-             ↓                       ↓
-         ImageView                TextView
-        Fruit Icon               Fruit Name
-             |                       |
-             +-----------+-----------+
-                         |
-                         ↓
-                  User Clicks Item
-                         |
-                         ↓
-                    Toast Message
-                         |
-                         ↓
-                "You selected: Fruit"
-```
-
----
-
-## Software Requirements
-
-- Android Studio
-- Kotlin
-- Android SDK
-- Gradle
-- Android Emulator or Physical Android Device
-
----
-
-## Technologies Used
-
-- Kotlin
-- Android ListView
-- Custom ArrayAdapter
-- ImageView
-- TextView
-- Toast
-- XML Layout
-- Android SDK
-
----
-
-## Project Folder and File Structure
-
-```text
 AdaptiveListViewMAD7/
 │
 ├── app/
-│   │
-│   ├── src/
-│   │   │
-│   │   └── main/
-│   │       │
-│   │       ├── java/
-│   │       │   └── com/example/adaptivelistviewmad7/
-│   │       │       ├── MainActivity.kt
-│   │       │       └── MyAdapter.kt
-│   │       │
-│   │       ├── res/
-│   │       │   └── layout/
-│   │       │       ├── activity_main.xml
-│   │       │       └── list_item.xml
-│   │       │
-│   │       └── AndroidManifest.xml
-│   │
-│   └── build.gradle.kts
+│   └── src/
+│       └── main/
+│           ├── java/com/example/adaptivelistviewmad7/
+│           │   ├── MainActivity.kt        # Entry point: builds the fruit list,
+│           │   │                          # sets the adapter, handles row clicks,
+│           │   │                          # and contains the Fruit data class.
+│           │   └── MyAdapter.kt           # Custom ArrayAdapter that binds each
+│           │                              # Fruit object to a list_item row.
+│           │
+│           ├── res/
+│           │   ├── layout/
+│           │   │   ├── activity_main.xml  # Main screen: header + ListView + footer.
+│           │   │   ├── list_item.xml      # Layout for a single fruit row (card).
+│           │   │   └── dialog_fruit.xml   # Layout for the fruit-details dialog.
+│           │   │
+│           │   ├── drawable/
+│           │   │   ├── card_bg.xml        # Rounded white background for rows.
+│           │   │   ├── fruit_apple.xml    # Vector icon — Apple
+│           │   │   ├── fruit_banana.xml   # Vector icon — Banana
+│           │   │   ├── fruit_grapes.xml   # Vector icon — Grapes
+│           │   │   ├── fruit_mango.xml    # Vector icon — Mango
+│           │   │   ├── fruit_orange.xml   # Vector icon — Orange
+│           │   │   └── fruit_watermelon.xml # Vector icon — Watermelon
+│           │   │
+│           │   └── values/
+│           │       ├── colors.xml         # App colour palette (green theme).
+│           │       ├── strings.xml        # String resources.
+│           │       └── themes.xml         # App theme.
+│           │
+│           └── AndroidManifest.xml        # App configuration & launcher activity.
 │
-├── gradle/
-│   └── wrapper/
+├── screenshots/                           # Output & test-case screenshots.
+│   ├── output.png
+│   ├── testcase1.png
+│   ├── testcase2.png
+│   └── testcase3.png
 │
-├── .idea/
-├── .gitignore
-├── build.gradle.kts
-├── gradle.properties
-├── gradlew
-├── gradlew.bat
-├── settings.gradle.kts
-├── screenshot.png
-└── README.md
+├── build.gradle.kts (:app)                # App-level Gradle build script.
+└── README.md                              # This file.
 ```
 
 ---
 
-## Important Files and Their Purpose
+## How to Run
 
-### MainActivity.kt
-
-`MainActivity.kt` is the main Activity of the application.
-
-It:
-
-- Creates the ListView.
-- Provides the fruit data.
-- Connects the ListView with the custom Adapter.
-- Handles item click events.
-- Displays the selected fruit using a Toast message.
-
----
-
-### MyAdapter.kt
-
-`MyAdapter.kt` is the custom Adapter class.
-
-It extends `ArrayAdapter` and overrides `getView()` to create a customized ListView item.
-
-The custom row contains:
-
-- `ImageView`
-- `TextView`
-
-This allows every fruit to be displayed with its own icon and name.
-
----
-
-### activity_main.xml
-
-`activity_main.xml` defines the main screen of the application.
-
-It contains the `ListView` used to display the list of fruits.
-
----
-
-### list_item.xml
-
-`list_item.xml` defines the design of an individual ListView item.
-
-Each row contains:
-
-```text
-ImageView + TextView
+1. Clone the repository:
+```bash
+   git clone https://github.com/<your-username>/AdaptiveListViewMAD7.git
 ```
-
-The ImageView displays the fruit icon and the TextView displays the fruit name.
-
----
-
-### AndroidManifest.xml
-
-`AndroidManifest.xml` contains the application configuration and Activity declaration required by the Android system.
+2. Open the project in **Android Studio**.
+3. Let **Gradle** sync and build.
+4. Connect a device or start an emulator, then click **Run ▶**.
 
 ---
 
-### build.gradle.kts
+## Output Screenshot
 
-This file contains the Android application build configuration and required dependencies.
+The main screen — a scrollable Fruit Catalog with a green header and a footer showing student details.
 
----
-
-## Working / Implementation
-
-### 1. Launch Application
-
-The application starts from `MainActivity`.
-
-The main screen contains a ListView displaying the available fruits.
-
----
-
-### 2. Display Fruit List
-
-The application provides a list of fruit names along with their corresponding icons.
-
-Example:
-
-```text
-🍎 Apple
-🍌 Banana
-🥭 Mango
-🍊 Orange
-```
-
-The actual icons are displayed using ImageView.
-
----
-
-### 3. Custom Adapter
-
-The `MyAdapter` class is used to customize the appearance of each ListView item.
-
-The Adapter inflates:
-
-```text
-list_item.xml
-```
-
-and binds the fruit image and fruit name to the corresponding views.
-
----
-
-### 4. Item Click Interaction
-
-When the user clicks a fruit item, the application displays a Toast message.
-
-For example, when Mango is selected:
-
-```text
-You selected: Mango
-```
-
----
-
-### 5. Student Verification
-
-The application includes the student's name and USN as part of the displayed list for verification.
-
-```text
-Tejas Sunil Waske - 25MCAR0189
-```
-
----
-
-# Test Cases
-
-## Test Case 1: List Displayed with Icons
-
-### Test Objective
-
-To verify that the ListView displays fruit names along with their corresponding icons.
-
-### Test Steps
-
-1. Launch the application.
-2. Observe the main screen.
-3. Check the displayed fruit list.
-4. Verify that each item contains an icon and fruit name.
-
-### Expected Result
-
-A list of fruit names, each accompanied by an icon, should be displayed successfully.
-
-### Actual Result
-
-The fruit list with icons was displayed successfully.
-
-### Status
-
-**PASS ✅**
-
----
-
-## Test Case 2: Item Click Interaction
-
-### Test Objective
-
-To verify that clicking a fruit item displays the selected fruit using a Toast message.
-
-### Test Steps
-
-1. Launch the application.
-2. Select a fruit from the ListView.
-3. Observe the Toast message.
-
-### Expected Result
-
-A Toast message should display the selected fruit.
-
-Example:
-
-```text
-You selected: Mango
-```
-
-### Actual Result
-
-The selected fruit name was displayed successfully using a Toast message.
-
-### Status
-
-**PASS ✅**
-
----
-
-## Test Case 3: Verify Student Name and USN
-
-### Test Objective
-
-To verify that the student's name and USN are displayed correctly in the application.
-
-### Test Data
-
-**Name:** Tejas Sunil Waske  
-**USN:** 25MCAR0189
-
-### Test Steps
-
-1. Launch the application.
-2. Observe the ListView.
-3. Locate the student information item.
-4. Verify the displayed name and USN.
-
-### Expected Result
-
-The application should display:
-
-```text
-Tejas Sunil Waske - 25MCAR0189
-```
-
-### Actual Result
-
-The student's name and USN were displayed successfully.
-
-### Status
-
-**PASS ✅**
-
----
-
-# Output
-
-The application successfully demonstrates an adaptive ListView using a custom ArrayAdapter.
-
-Each list item contains an ImageView and TextView, and clicking an item displays a Toast message containing the selected fruit name.
-
-### Output Screenshot
-
-<img width="1080" height="2358" alt="screenshot7 png" src="https://github.com/user-attachments/assets/16eb7c07-65ff-424f-bf5a-82abfb06c898" />
 
 
 ---
 
-# Steps to Run the Project
+## Test Cases
 
-1. Open the project in Android Studio.
-2. Allow Gradle synchronization to complete.
-3. Connect an Android device or start an Android Emulator.
-4. Select the application from the Run Configuration.
-5. Click the **Run ▶** button.
-6. Launch the application.
-7. Observe the fruit list.
-8. Click any fruit item.
-9. Verify the Toast message.
+### Test Case 1 — App launches and displays the fruit list (shows Name & USN)
 
----
+| | |
+|---|---|
+| **Description** | On launching the app, the Fruit Catalog loads with all six fruits, each showing icon, name, description, and price. The footer displays **Tejas Sunil Waske / USN: 25MCAR0189 / Experiment 7**. |
+| **Input** | Launch the app. |
+| **Expected Output** | List of fruits is displayed correctly with the student name and USN visible in the footer. |
+| **Result** | ✅ Pass |
 
-# Requirements
+<img width="732" height="1600" alt="711" src="https://github.com/user-attachments/assets/2b86bca5-2e94-4edc-9476-af43f2578e26" />
 
-## Hardware Requirements
 
-- Laptop/Desktop
-- Android Device or Android Emulator
-- USB Cable if using a physical Android device
 
-## Software Requirements
+### Test Case 2 — Tapping a fruit opens its details dialog
 
-- Android Studio
-- Kotlin
-- Android SDK
-- Gradle
+| | |
+|---|---|
+| **Description** | Tapping a fruit row (e.g., *Apple*) opens an `AlertDialog` showing a larger image of the fruit and its name. |
+| **Input** | Tap on the **Apple** row. |
+| **Expected Output** | A dialog appears with the Apple image, the name "Apple", and a **CLOSE** button. |
+| **Result** | ✅ Pass |
 
----
 
-# Learning Outcomes
 
-After completing this experiment, the following concepts were understood:
+### Test Case 3 — Closing the dialog returns to the list
 
-- ListView
-- Custom Adapter
-- ArrayAdapter
-- `getView()`
-- ImageView
-- TextView
-- Toast
-- Custom ListView row layout
-- Handling ListView item clicks
-- Displaying images with list data
-- Android XML Layouts
+| | |
+|---|---|
+| **Description** | Pressing **CLOSE** on the details dialog dismisses it and returns the user to the fruit list without any change in state. |
+| **Input** | Tap **CLOSE** on the open dialog. |
+| **Expected Output** | The dialog closes and the full fruit list is shown again. |
+| **Result** | ✅ Pass |
+
+<img width="732" height="1600" alt="722" src="https://github.com/user-attachments/assets/fbedba95-d396-49a2-8ab4-bb98fa4efa43" />
+
 
 ---
 
-# Result
+## Conclusion
 
-The Android application was successfully developed and executed using a custom Adapter with ListView and ImageView.
-
-The application successfully displays fruit names with icons and responds to item click events using Toast messages.
-
----
-
-# Conclusion
-
-The experiment successfully demonstrated how to create an adaptive Android application using ListView and a custom Adapter.
-
-The custom `MyAdapter` class was used to display each fruit with an ImageView and TextView. The application also handled ListView item click events and displayed the selected fruit name using a Toast message.
-
-Thus, the objective of creating an adaptive Android application using ListView, ImageView, and a custom Adapter was successfully achieved.
-
----
-
-# Student Information
-
-**Name:** Tejas Sunil Waske  
-**USN:** 25MCAR0189
-
-**Experiment:** Experiment 7 – Adaptive Android Application with ListView and ImageView
-
----
-
-# GitHub Repository
-
-**Repository Name:** AdaptiveListViewMAD7
-
-**GitHub Link:**
-
-https://github.com/twaske2-dotcom/AdaptiveListViewMAD7
-
----
-
-# Reference
-
-- Android Developers – ListView
-- Android Developers – ArrayAdapter
-- Android Developers – ImageView
-- Android Developers – Toast
-
----
-
-## Author
-
-**Tejas Sunil Waske**
-
-**USN:** 25MCAR0189
+This experiment demonstrates how to build an **adaptive UI** in Android using `ListView`, `ImageView`, and a **custom `ArrayAdapter`**. Because the list is generated from a data model, the interface adapts automatically to the underlying data, and an `AlertDialog` adds simple, effective item-level interaction.
